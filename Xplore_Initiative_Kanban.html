@@ -1,0 +1,1641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xplore Initiative Pipeline | Bainbridge Executive</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Raleway:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --main-text: #112236;
+            --main-accent: #ffcb47;
+            --secondary-accent: #b01124;
+            --green: #306154;
+            --green-light: #4a7a6a;
+            --light-green: #ebf1de;
+            --medium-green: #d4e1b9;
+            --board-bg: #8fa89e;
+            --white: #ffffff;
+            --gray-100: #f8f9fa;
+            --gray-200: #e9ecef;
+            --gray-300: #dee2e6;
+            --gray-400: #ced4da;
+            --sticky-yellow: #fff59d;
+            --sticky-blue: #90caf9;
+            --sticky-purple: #ce93d8;
+            --sticky-orange: #ffcc80;
+            --sticky-teal: #80cbc4;
+            --now-green: #c8e6c9;
+            --next-yellow: #fff9c4;
+            --later-orange: #ffe0b2;
+            --priority-high: #b01124;
+            --priority-medium: #e67e22;
+            --priority-low: #306154;
+            --priority-tbd: #9e9e9e;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Raleway', sans-serif;
+            background: #f0f2f5;
+            color: var(--main-text);
+            min-height: 100vh;
+            line-height: 1.15;
+        }
+
+        .header {
+            background: var(--white);
+            border-bottom: 4px solid var(--main-accent);
+            padding: 0.75rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .xplore-logo {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--green);
+        }
+
+        .xplore-logo span {
+            color: var(--main-text);
+        }
+
+        .pipeline-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--main-text);
+            padding-left: 1.5rem;
+            border-left: 2px solid var(--gray-300);
+        }
+
+        .be-logo {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--main-text);
+        }
+
+        .be-logo .dot {
+            color: var(--main-accent);
+        }
+
+        .board-container {
+            padding: 1rem;
+            overflow-x: auto;
+        }
+
+        .kanban-grid {
+            display: table;
+            border-collapse: collapse;
+            min-width: 100%;
+            background: var(--white);
+            border: 1px solid var(--gray-300);
+        }
+
+        .kanban-row {
+            display: table-row;
+        }
+
+        .kanban-cell {
+            display: table-cell;
+            border: 1px solid var(--gray-300);
+            vertical-align: top;
+            min-width: 120px;
+            position: relative;
+        }
+
+        .row-header {
+            background: var(--green);
+            color: var(--white);
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.65rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 0.5rem;
+            min-width: 85px;
+            max-width: 85px;
+            text-align: center;
+            vertical-align: top;
+        }
+
+        .column-header-cell {
+            background: var(--light-green);
+            padding: 0.4rem;
+            text-align: center;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.6rem;
+            font-weight: 600;
+            color: var(--main-text);
+            min-height: 45px;
+            vertical-align: middle;
+        }
+
+        .column-header-cell.highlight {
+            background: var(--green);
+            color: var(--white);
+        }
+
+        .column-header-cell.accent {
+            background: var(--main-accent);
+            color: var(--main-text);
+        }
+
+        .info-cell {
+            background: var(--white);
+            padding: 0.5rem;
+            font-size: 0.6rem;
+            color: var(--main-text);
+            min-height: 40px;
+            vertical-align: top;
+            text-align: left;
+            line-height: 1.4;
+        }
+
+        .info-cell.na {
+            color: var(--gray-400);
+            font-style: italic;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .info-cell.center {
+            text-align: center;
+        }
+
+        .info-cell ul {
+            margin: 0;
+            padding-left: 0.9rem;
+        }
+
+        .info-cell li {
+            margin-bottom: 0.2rem;
+        }
+
+        .steps-cell {
+            background: var(--board-bg);
+            padding: 0.5rem;
+            min-height: 380px;
+            vertical-align: top;
+        }
+
+        .steps-cell.backlog {
+            background: var(--green);
+        }
+
+        .steps-cell.onepager {
+            background: var(--main-accent);
+        }
+
+        .idea-backlog-cell {
+            background: var(--green);
+            padding: 0;
+            min-width: 200px;
+        }
+
+        .backlog-section {
+            padding: 0.4rem;
+            min-height: 120px;
+        }
+
+        .backlog-section.now {
+            background: var(--now-green);
+        }
+
+        .backlog-section.next {
+            background: var(--next-yellow);
+        }
+
+        .backlog-section.later {
+            background: var(--later-orange);
+        }
+
+        .backlog-section-header {
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.55rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.35rem;
+            padding-bottom: 0.2rem;
+            border-bottom: 2px solid rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .backlog-section.now .backlog-section-header { color: var(--green); }
+        .backlog-section.next .backlog-section-header { color: #f57f17; }
+        .backlog-section.later .backlog-section-header { color: #e65100; }
+
+        .section-add-btn {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            border: none;
+            background: rgba(0,0,0,0.1);
+            color: rgba(0,0,0,0.5);
+            cursor: pointer;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .section-add-btn:hover {
+            background: rgba(0,0,0,0.2);
+            color: rgba(0,0,0,0.7);
+        }
+
+        .sticky-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.35rem;
+            align-content: flex-start;
+        }
+
+        .sticky-note {
+            width: 72px;
+            min-height: 80px;
+            padding: 0.3rem;
+            font-size: 0.42rem;
+            font-weight: 500;
+            line-height: 1.15;
+            cursor: pointer;
+            position: relative;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.15);
+            transition: all 0.2s ease;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            border-radius: 2px;
+        }
+
+        .sticky-note:hover {
+            transform: scale(1.08) rotate(-1deg);
+            box-shadow: 4px 4px 12px rgba(0,0,0,0.25);
+            z-index: 10;
+        }
+
+        .sticky-note.dragging {
+            opacity: 0.6;
+            cursor: grabbing;
+            transform: rotate(3deg);
+        }
+
+        /* Initiative Type Colors */
+        .sticky-note.yellow { background: linear-gradient(135deg, var(--sticky-yellow) 0%, #fff176 100%); }
+        .sticky-note.blue { background: linear-gradient(135deg, var(--sticky-blue) 0%, #64b5f6 100%); }
+        .sticky-note.purple { background: linear-gradient(135deg, var(--sticky-purple) 0%, #ba68c8 100%); }
+        .sticky-note.orange { background: linear-gradient(135deg, var(--sticky-orange) 0%, #ffb74d 100%); }
+        .sticky-note.teal { background: linear-gradient(135deg, var(--sticky-teal) 0%, #4db6ac 100%); }
+
+        .sticky-flag {
+            font-size: 0.28rem;
+            color: var(--white);
+            background: var(--green);
+            padding: 0.04rem 0.08rem;
+            border-radius: 2px;
+            margin-bottom: 0.06rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+            line-height: 1.1;
+        }
+
+        .sticky-title {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 0.45rem;
+            margin-bottom: 0.12rem;
+            color: var(--main-text);
+            line-height: 1.15;
+        }
+
+        .sticky-theme {
+            font-size: 0.36rem;
+            color: rgba(17, 34, 54, 0.7);
+            margin-bottom: 0.08rem;
+            font-weight: 600;
+        }
+
+        .sticky-type-badge {
+            font-size: 0.32rem;
+            color: rgba(17, 34, 54, 0.8);
+            background: rgba(255,255,255,0.7);
+            padding: 0.04rem 0.1rem;
+            border-radius: 2px;
+            margin-bottom: 0.06rem;
+            font-weight: 600;
+        }
+
+        .sticky-stage {
+            font-size: 0.36rem;
+            color: rgba(17, 34, 54, 0.9);
+            background: rgba(255,255,255,0.6);
+            padding: 0.06rem 0.12rem;
+            border-radius: 2px;
+            margin-top: auto;
+            text-align: center;
+        }
+
+        .sticky-impl {
+            font-size: 0.34rem;
+            color: rgba(17, 34, 54, 0.6);
+            margin-top: 0.06rem;
+            font-style: italic;
+            line-height: 1.12;
+        }
+
+        .sticky-tech-badge {
+            position: absolute;
+            top: 2px;
+            right: 2px;
+            font-size: 0.42rem;
+        }
+
+        .priority-dot {
+            position: absolute;
+            bottom: 3px;
+            right: 3px;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .priority-dot.high { background: var(--priority-high); }
+        .priority-dot.medium { background: var(--priority-medium); }
+        .priority-dot.low { background: var(--priority-low); }
+        .priority-dot.tbd { background: var(--priority-tbd); }
+
+        .phase-row .kanban-cell {
+            background: var(--gray-100);
+            padding: 0.4rem 0.3rem;
+            text-align: center;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border-bottom: 2px solid var(--gray-300);
+        }
+
+        .phase-row .intake { background: #e8f5e9; color: var(--green); }
+        .phase-row .refinement { background: #fff8e1; color: #f57f17; }
+        .phase-row .planning { background: #e3f2fd; color: #1565c0; }
+        .phase-row .validation { background: #f3e5f5; color: #7b1fa2; }
+        .phase-row .handoff { background: #fce4ec; color: var(--secondary-accent); }
+
+        .steps-cell.drag-over,
+        .backlog-section.drag-over {
+            background: rgba(255, 203, 71, 0.4) !important;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(17, 34, 54, 0.7);
+            backdrop-filter: blur(4px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal {
+            background: var(--white);
+            border-radius: 12px;
+            width: 90%;
+            max-width: 700px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+        }
+
+        .modal-overlay.active .modal {
+            transform: translateY(0);
+        }
+
+        .modal-header {
+            padding: 1.25rem;
+            border-bottom: 1px solid var(--gray-200);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--light-green);
+        }
+
+        .modal-header h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--green);
+        }
+
+        .modal-close {
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            border: none;
+            background: var(--white);
+            color: var(--main-text);
+            cursor: pointer;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .modal-close:hover {
+            background: var(--secondary-accent);
+            color: var(--white);
+        }
+
+        .modal-body {
+            padding: 1.25rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--main-text);
+            margin-bottom: 0.35rem;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.6rem;
+            border: 2px solid var(--gray-200);
+            border-radius: 6px;
+            font-family: 'Raleway', sans-serif;
+            font-size: 0.85rem;
+            color: var(--main-text);
+            transition: all 0.2s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--main-accent);
+        }
+
+        .form-group textarea {
+            min-height: 70px;
+            resize: vertical;
+        }
+
+        .form-group select:disabled {
+            background: var(--gray-200);
+            color: var(--gray-400);
+            cursor: not-allowed;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem;
+        }
+
+        .form-row-3 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 0.75rem;
+        }
+
+        .form-row-4 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 0.75rem;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: auto;
+        }
+
+        .checkbox-group label {
+            margin-bottom: 0;
+            text-transform: none;
+            font-weight: 500;
+        }
+
+        .modal-footer {
+            padding: 1rem 1.25rem;
+            border-top: 1px solid var(--gray-200);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 0.6rem 1.25rem;
+            border-radius: 6px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+        }
+
+        .btn-delete {
+            background: transparent;
+            color: var(--secondary-accent);
+            padding: 0.6rem;
+        }
+
+        .btn-delete:hover {
+            background: #fce4ec;
+        }
+
+        .btn-secondary {
+            background: var(--gray-100);
+            color: var(--main-text);
+        }
+
+        .btn-secondary:hover {
+            background: var(--gray-200);
+        }
+
+        .btn-primary {
+            background: var(--green);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background: #264a3f;
+        }
+
+        .btn-export {
+            background: var(--main-accent);
+            color: var(--main-text);
+        }
+
+        .btn-export:hover {
+            background: #e6b73e;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .legend {
+            display: flex;
+            gap: 1.5rem;
+            padding: 0.6rem 1rem;
+            background: var(--white);
+            border-top: 1px solid var(--gray-200);
+            font-size: 0.7rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .legend-color {
+            width: 18px;
+            height: 18px;
+            border-radius: 3px;
+        }
+
+        .legend-divider {
+            width: 1px;
+            height: 18px;
+            background: var(--gray-300);
+        }
+
+        .priority-legend-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--gray-100);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--gray-300);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--gray-400);
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo-section">
+            <div class="xplore-logo"><span>X</span>plore</div>
+            <div class="pipeline-title">Initiative Pipeline Board</div>
+        </div>
+        <div class="be-logo">Be<span class="dot">.</span></div>
+    </header>
+
+    <div class="board-container">
+        <div class="kanban-grid">
+            <!-- Phase Labels Row - 10 columns now (removed MVP Prioritization) -->
+            <div class="kanban-row phase-row">
+                <div class="kanban-cell row-header" style="background: var(--main-text);"></div>
+                <div class="kanban-cell intake">INTAKE</div>
+                <div class="kanban-cell intake"></div>
+                <div class="kanban-cell intake"></div>
+                <div class="kanban-cell intake"></div>
+                <div class="kanban-cell refinement">REFINEMENT</div>
+                <div class="kanban-cell refinement"></div>
+                <div class="kanban-cell refinement"></div>
+                <div class="kanban-cell planning">RESOURCE PLANNING</div>
+                <div class="kanban-cell validation">VALIDATION</div>
+                <div class="kanban-cell handoff">HANDOFF</div>
+            </div>
+
+            <!-- CEREMONIES Row -->
+            <div class="kanban-row">
+                <div class="kanban-cell row-header">CEREMONIES</div>
+                <div class="kanban-cell info-cell na"></div>
+                <div class="kanban-cell info-cell na"></div>
+                <div class="kanban-cell info-cell na"></div>
+                <div class="kanban-cell info-cell na"></div>
+                <div class="kanban-cell info-cell na"></div>
+                <div class="kanban-cell info-cell na"></div>
+                <div class="kanban-cell info-cell na"></div>
+                <div class="kanban-cell info-cell na"></div>
+                <div class="kanban-cell info-cell na"></div>
+                <div class="kanban-cell info-cell na"></div>
+            </div>
+
+            <!-- POLICIES Row -->
+            <div class="kanban-row">
+                <div class="kanban-cell row-header">POLICIES<br><small style="font-weight:400;opacity:0.8">(Exit Criteria)</small></div>
+                <div class="kanban-cell info-cell">
+                    <ul>
+                        <li>Idea submitted via intake form</li>
+                        <li>Problem statement clearly articulated</li>
+                        <li>Initial theme/category assigned</li>
+                        <li>Journey stage identified</li>
+                    </ul>
+                </div>
+                <div class="kanban-cell info-cell">
+                    <ul>
+                        <li>Key stakeholders interviewed</li>
+                        <li>Problem validated with data or examples</li>
+                        <li>High-level scope boundaries defined</li>
+                        <li>Technical vs. process solution identified</li>
+                        <li>Initial implementation approach documented</li>
+                    </ul>
+                </div>
+                <div class="kanban-cell info-cell">
+                    <ul>
+                        <li>Effort estimate assigned (T-shirt size)</li>
+                        <li>Impact score documented (1-5)</li>
+                        <li>Risk level assessed</li>
+                        <li>Strategic alignment confirmed</li>
+                        <li>Scoring rationale documented</li>
+                    </ul>
+                </div>
+                <div class="kanban-cell info-cell">
+                    <ul>
+                        <li>Ranked against other initiatives</li>
+                        <li>Executive sponsor identified</li>
+                        <li>Approved for refinement</li>
+                        <li>Target timeline established</li>
+                    </ul>
+                </div>
+                <div class="kanban-cell info-cell">
+                    <ul>
+                        <li>User journey documented end-to-end</li>
+                        <li>Backbone activities identified</li>
+                        <li>User tasks mapped under each activity</li>
+                        <li>Pain points annotated on map</li>
+                        <li>Success metrics defined per step</li>
+                    </ul>
+                </div>
+                <div class="kanban-cell info-cell">
+                    <ul>
+                        <li>Value type identified (cost savings, revenue, experience)</li>
+                        <li>Monthly dollar impact estimated</li>
+                        <li>Assumptions documented</li>
+                        <li>Calculation methodology recorded</li>
+                        <li>Confidence level assigned</li>
+                    </ul>
+                </div>
+                <div class="kanban-cell info-cell">
+                    <ul>
+                        <li>3-5 MVPs identified and scoped</li>
+                        <li>Each MVP sized (XS, S, M, L, XL)</li>
+                        <li>MVP sequence defined</li>
+                        <li>Acceptance criteria written for MVP1</li>
+                        <li>"Walking skeleton" defined</li>
+                    </ul>
+                </div>
+                <div class="kanban-cell info-cell">
+                    <ul>
+                        <li><strong>Capability:</strong> All required teams identified</li>
+                        <li>Skill gaps flagged</li>
+                        <li><strong>Capacity:</strong> Named resources confirmed</li>
+                        <li>Competing priorities documented</li>
+                        <li><strong>Dependencies:</strong> Blockers identified</li>
+                        <li>Dependency owners assigned</li>
+                    </ul>
+                </div>
+                <div class="kanban-cell info-cell">
+                    <ul>
+                        <li>Concept sketches or wireframes created</li>
+                        <li>Key user flows visualized</li>
+                        <li>Validated with internal stakeholders</li>
+                        <li>Validated with customers/end users</li>
+                        <li>Feedback incorporated</li>
+                    </ul>
+                </div>
+                <div class="kanban-cell info-cell">
+                    <ul>
+                        <li>One-Pager fully completed</li>
+                        <li>All sections signed off</li>
+                        <li>Handoff meeting scheduled</li>
+                        <li>Orchestration Office accepts</li>
+                        <li>Delivery team assigned</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- WHO Row -->
+            <div class="kanban-row">
+                <div class="kanban-cell row-header">WHO</div>
+                <div class="kanban-cell info-cell center">Anyone<br>(via intake form)</div>
+                <div class="kanban-cell info-cell center">Business Analyst<br>SMEs<br>End Users</div>
+                <div class="kanban-cell info-cell center">Scoring Committee<br>Business<br>Technology</div>
+                <div class="kanban-cell info-cell center">Executive Sponsors<br>Product Owner</div>
+                <div class="kanban-cell info-cell center">Product Owner<br>Business Analyst<br>End Users</div>
+                <div class="kanban-cell info-cell center">Business Analyst<br>Finance<br>Product Owner</div>
+                <div class="kanban-cell info-cell center">Product Owner<br>Tech Lead<br>Delivery Team</div>
+                <div class="kanban-cell info-cell center">Capability Leads<br>Resource Managers<br>Tech Leads</div>
+                <div class="kanban-cell info-cell center">UX/Design<br>Business<br>Customers</div>
+                <div class="kanban-cell info-cell center">Orchestration Office<br>Delivery Lead</div>
+            </div>
+
+            <!-- OUTPUTS Row -->
+            <div class="kanban-row">
+                <div class="kanban-cell row-header">OUTPUTS</div>
+                <div class="kanban-cell info-cell center">Intake Form<br>Submitted</div>
+                <div class="kanban-cell info-cell center">Scoping<br>Document</div>
+                <div class="kanban-cell info-cell center">Effort/Impact<br>Score Card</div>
+                <div class="kanban-cell info-cell center">Prioritized<br>Backlog</div>
+                <div class="kanban-cell info-cell center">Story Map<br>Artifact</div>
+                <div class="kanban-cell info-cell center">Value Estimate<br>Worksheet</div>
+                <div class="kanban-cell info-cell center">MVP Definition<br>Document</div>
+                <div class="kanban-cell info-cell center">Resource Plan<br>Dependency Map</div>
+                <div class="kanban-cell info-cell center">Validated<br>Designs</div>
+                <div class="kanban-cell info-cell center">One-Pager<br>Document</div>
+            </div>
+
+            <!-- STEPS Row (Column Headers) -->
+            <div class="kanban-row">
+                <div class="kanban-cell row-header">STEPS</div>
+                <div class="kanban-cell column-header-cell highlight">Idea Backlog<br><small>(NOW / NEXT / LATER)</small></div>
+                <div class="kanban-cell column-header-cell">Scoping</div>
+                <div class="kanban-cell column-header-cell">Scoring</div>
+                <div class="kanban-cell column-header-cell highlight">Prioritized Backlog</div>
+                <div class="kanban-cell column-header-cell">Story Mapping</div>
+                <div class="kanban-cell column-header-cell">Value Estimation</div>
+                <div class="kanban-cell column-header-cell">MVP Definition</div>
+                <div class="kanban-cell column-header-cell">Capability, Capacity & Dependencies</div>
+                <div class="kanban-cell column-header-cell">High-Level Designs / Concepts</div>
+                <div class="kanban-cell column-header-cell accent">Complete One-Pager</div>
+            </div>
+
+            <!-- Sticky Notes Row -->
+            <div class="kanban-row">
+                <div class="kanban-cell row-header" style="background: var(--board-bg);"></div>
+                
+                <!-- Idea Backlog with NOW/NEXT/LATER sections -->
+                <div class="kanban-cell idea-backlog-cell" data-column="backlog">
+                    <div class="backlog-section now" data-section="now" id="section-now">
+                        <div class="backlog-section-header">
+                            <span>NOW (Starting 0-6 Months)</span>
+                            <button class="section-add-btn" onclick="openModal('now')">+</button>
+                        </div>
+                        <div class="sticky-container"></div>
+                    </div>
+                    <div class="backlog-section next" data-section="next" id="section-next">
+                        <div class="backlog-section-header">
+                            <span>NEXT (Starting 6-18 Months)</span>
+                            <button class="section-add-btn" onclick="openModal('next')">+</button>
+                        </div>
+                        <div class="sticky-container"></div>
+                    </div>
+                    <div class="backlog-section later" data-section="later" id="section-later">
+                        <div class="backlog-section-header">
+                            <span>LATER (Starting 18+ Months)</span>
+                            <button class="section-add-btn" onclick="openModal('later')">+</button>
+                        </div>
+                        <div class="sticky-container"></div>
+                    </div>
+                </div>
+                
+                <div class="kanban-cell steps-cell" data-column="scoping" id="col-scoping">
+                    <div class="sticky-container"></div>
+                </div>
+                <div class="kanban-cell steps-cell" data-column="scoring" id="col-scoring">
+                    <div class="sticky-container"></div>
+                </div>
+                <div class="kanban-cell steps-cell backlog" data-column="prioritized" id="col-prioritized">
+                    <div class="sticky-container"></div>
+                </div>
+                <div class="kanban-cell steps-cell" data-column="story" id="col-story">
+                    <div class="sticky-container"></div>
+                </div>
+                <div class="kanban-cell steps-cell" data-column="value" id="col-value">
+                    <div class="sticky-container"></div>
+                </div>
+                <div class="kanban-cell steps-cell" data-column="mvp" id="col-mvp">
+                    <div class="sticky-container"></div>
+                </div>
+                <div class="kanban-cell steps-cell" data-column="resources" id="col-resources">
+                    <div class="sticky-container"></div>
+                </div>
+                <div class="kanban-cell steps-cell" data-column="designs" id="col-designs">
+                    <div class="sticky-container"></div>
+                </div>
+                <div class="kanban-cell steps-cell onepager" data-column="onepager" id="col-onepager">
+                    <div class="sticky-container"></div>
+                    <div style="margin-top: 1rem; text-align: center;">
+                        <a href="OnePagerTemplate.pptx" download download="Initiative_OnePager.pptx" style="display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.5rem 1rem; background: var(--white); color: var(--main-text); text-decoration: none; border-radius: 6px; font-family: Poppins, sans-serif; font-size: 0.6rem; font-weight: 600; box-shadow: 2px 2px 6px rgba(0,0,0,0.15); transition: all 0.2s ease;">
+                            📄 Download One-Pager Template
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Legend - NO Add button -->
+    <div class="legend">
+        <strong style="font-family: Poppins; color: var(--main-text);">Initiative Type:</strong>
+        <div class="legend-item">
+            <div class="legend-color" style="background: linear-gradient(135deg, var(--sticky-blue) 0%, #64b5f6 100%);"></div>
+            <span>CX (Tech)</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background: linear-gradient(135deg, var(--sticky-yellow) 0%, #fff176 100%);"></div>
+            <span>CX (Process)</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background: linear-gradient(135deg, var(--sticky-purple) 0%, #ba68c8 100%);"></div>
+            <span>Revenue</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background: linear-gradient(135deg, var(--sticky-orange) 0%, #ffb74d 100%);"></div>
+            <span>Fee Leakage</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background: linear-gradient(135deg, var(--sticky-teal) 0%, #4db6ac 100%);"></div>
+            <span>Other</span>
+        </div>
+        <div class="legend-divider"></div>
+        <div class="legend-item">
+            <div class="priority-legend-dot" style="background: var(--priority-high);"></div>
+            <span>High Priority</span>
+        </div>
+        <div class="legend-item">
+            <div class="priority-legend-dot" style="background: var(--priority-medium);"></div>
+            <span>Medium</span>
+        </div>
+        <div class="legend-item">
+            <div class="priority-legend-dot" style="background: var(--priority-low);"></div>
+            <span>Low</span>
+        </div>
+        <div class="legend-item">
+            <div class="priority-legend-dot" style="background: var(--priority-tbd);"></div>
+            <span>TBD</span>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 id="modalTitle">Add New Initiative</h2>
+                <button class="modal-close" onclick="closeModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Initiative Name</label>
+                    <input type="text" id="cardTitle" placeholder="e.g., Bill Breakdown Email">
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Initiative Type</label>
+                        <select id="cardInitiativeType" onchange="handleInitiativeTypeChange()">
+                            <option value="CX">Customer Experience (CX)</option>
+                            <option value="Revenue">Revenue</option>
+                            <option value="Fee Leakage">Fee Leakage</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Theme <span id="themeNote" style="font-weight:400;font-size:0.6rem;color:#737373;">(CX only)</span></label>
+                        <select id="cardTheme">
+                            <option value="1. SALES AGENT ENABLEMENT">1. Sales Agent Enablement</option>
+                            <option value="2. BILLING TRANSPARENCY - IMMEDIATE">2. Billing Transparency</option>
+                            <option value="2. SERVICEABILITY & COVERAGE TOOLS">2. Serviceability & Coverage Tools</option>
+                            <option value="3. EXPECTATION SETTING & COMMUNICATION BASICS">3. Expectation Setting & Communication</option>
+                            <option value="3. PAYMENT & ACTIVATION STREAMLINING">3. Payment & Activation Streamlining</option>
+                            <option value="4. TECHNICIAN QUALITY & CONSISTENCY">4. Technician Quality & Consistency</option>
+                            <option value="5. DATA CAPTURE FOR FUTURE AUTOMATION">5. Data Capture for Automation</option>
+                            <option value="5. PROACTIVE COMMUNICATION AUTOMATION">5. Proactive Communication Automation</option>
+                            <option value="6. POST-INSTALL SUPPORT - QUICK WINS">6. Post-Install Support</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Journey Stage</label>
+                    <select id="cardJourneyStage">
+                        <option value="Awareness">Awareness</option>
+                        <option value="Consideration">Consideration</option>
+                        <option value="Sales Pre-Qual">Sales Pre-Qual</option>
+                        <option value="Sale Occurs">Sale Occurs</option>
+                        <option value="Installation is Booked">Installation is Booked</option>
+                        <option value="Installation Occurs">Installation Occurs</option>
+                        <option value="Account is Activated">Account is Activated</option>
+                        <option value="Early Use (First 30 Days)">Early Use (First 30 Days)</option>
+                        <option value="Ongoing Use">Ongoing Use</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Flag <span style="font-weight:400;font-size:0.6rem;color:#737373;">(shown on card face)</span></label>
+                    <input type="text" id="cardFlag" placeholder="e.g., Prepare for install, Ghosting, Nancy...">
+                </div>
+
+                <div class="form-group">
+                    <label>Description / Explanation</label>
+                    <textarea id="cardDescription" placeholder="What pain point does this address?"></textarea>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Implementation Notes</label>
+                        <input type="text" id="cardImplementation" placeholder="e.g., Knowledge base/FAQ">
+                    </div>
+                    <div class="form-group">
+                        <label>Rationale</label>
+                        <input type="text" id="cardRationale" placeholder="Why is this important?">
+                    </div>
+                </div>
+
+                <div class="checkbox-group">
+                    <input type="checkbox" id="cardRequiresTech">
+                    <label for="cardRequiresTech">Requires Technology (system changes, development, integrations)</label>
+                </div>
+
+                <div class="form-row-4" style="margin-top: 1rem;">
+                    <div class="form-group">
+                        <label>Value ($/month)</label>
+                        <input type="text" id="cardValue" placeholder="e.g., $9,600">
+                    </div>
+                    <div class="form-group">
+                        <label>Size</label>
+                        <select id="cardSize">
+                            <option value="">Not sized</option>
+                            <option value="XS">XS</option>
+                            <option value="S">S</option>
+                            <option value="M">M</option>
+                            <option value="L">L</option>
+                            <option value="XL">XL</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Priority</label>
+                        <select id="cardPriority">
+                            <option value="high">High</option>
+                            <option value="medium">Medium</option>
+                            <option value="low">Low</option>
+                            <option value="tbd">TBD</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Horizon</label>
+                        <select id="cardHorizon">
+                            <option value="now">NOW (0-6 mo)</option>
+                            <option value="next">NEXT (6-18 mo)</option>
+                            <option value="later">LATER (18+ mo)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Capabilities Required</label>
+                        <input type="text" id="cardCapabilities" placeholder="e.g., Technology, Marketing, Training">
+                    </div>
+                    <div class="form-group">
+                        <label>Dependencies</label>
+                        <input type="text" id="cardDependencies" placeholder="e.g., Requires Portal foundation">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Executive Sponsor</label>
+                    <input type="text" id="cardSponsor" placeholder="e.g., VP Customer Experience">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-delete" id="deleteBtn" onclick="deleteCard()" style="display: none;">Delete</button>
+                <div class="btn-group">
+                    <button class="btn btn-export" id="exportBtn" onclick="exportOnePager()" style="display: none;">Export One-Pager</button>
+                    <button class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+                    <button class="btn btn-primary" onclick="saveCard()">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    // Hosted-safe loader for initiativeData.
+    // Works even if GoDaddy serves initiative_data.js with the wrong Content-Type.
+    (function () {
+        function buildCards() {
+            try {
+                return JSON.parse(JSON.stringify(window.initiativeData || []));
+            } catch (e) {
+                console.error("Failed to build cards from initiativeData", e);
+                return [];
+            }
+        }
+
+        function startBoard() {
+            window.cards = buildCards();
+            if (!window.cards || window.cards.length === 0) {
+                console.warn("No initiative data loaded, board will be empty.");
+            }
+            if (document.readyState === "loading") {
+                document.addEventListener("DOMContentLoaded", function () {
+                    initBoard();
+                });
+            } else {
+                initBoard();
+            }
+        }
+
+        function fallbackFetchThenStart() {
+            fetch("initiative_data.js", { cache: "no-store" })
+                .then(function (r) { return r.text(); })
+                .then(function (txt) {
+                    (0, eval)(txt);
+                    startBoard();
+                })
+                .catch(function (err) {
+                    console.error("Could not load initiative_data.js via fetch fallback", err);
+                    startBoard();
+                });
+        }
+
+        var s = document.createElement("script");
+        s.src = "initiative_data.js";
+        s.defer = true;
+        s.onload = function () {
+            startBoard();
+        };
+        s.onerror = function () {
+            fallbackFetchThenStart();
+        };
+        document.head.appendChild(s);
+    })();
+    </script>
+
+    <script>
+        var cards = [];
+        var currentEditId = null;
+        var currentColumn = 'now';
+        var draggedCard = null;
+
+        function getColorClass(card) {
+            var initType = card.initiativeType || 'CX';
+            if (initType === 'CX') {
+                return card.requiresTech ? 'blue' : 'yellow';
+            } else if (initType === 'Revenue') {
+                return 'purple';
+            } else if (initType === 'Fee Leakage') {
+                return 'orange';
+            } else {
+                return 'teal';
+            }
+        }
+
+        function getShortTheme(theme) {
+            if (!theme) return '';
+            if (theme.indexOf('SALES AGENT') !== -1) return 'Sales Enablement';
+            if (theme.indexOf('BILLING') !== -1) return 'Billing';
+            if (theme.indexOf('SERVICEABILITY') !== -1) return 'Coverage';
+            if (theme.indexOf('EXPECTATION') !== -1) return 'Expectation Setting';
+            if (theme.indexOf('PAYMENT') !== -1) return 'Payment/Activation';
+            if (theme.indexOf('TECHNICIAN') !== -1) return 'Tech Quality';
+            if (theme.indexOf('DATA CAPTURE') !== -1) return 'Data Capture';
+            if (theme.indexOf('PROACTIVE') !== -1) return 'Proactive Comms';
+            if (theme.indexOf('POST-INSTALL') !== -1) return 'Post-Install';
+            return theme.substring(0, 10);
+        }
+
+        function handleInitiativeTypeChange() {
+            var typeSelect = document.getElementById('cardInitiativeType');
+            var themeSelect = document.getElementById('cardTheme');
+            var themeNote = document.getElementById('themeNote');
+            
+            if (typeSelect.value === 'CX') {
+                themeSelect.disabled = false;
+                themeNote.textContent = '(CX only)';
+            } else {
+                themeSelect.disabled = true;
+                themeSelect.value = '';
+                themeNote.textContent = '(CX only - disabled)';
+            }
+        }
+
+        function initBoard() {
+            document.getElementById('modalOverlay').addEventListener('click', function(e) {
+                if (e.target.id === 'modalOverlay') {
+                    closeModal();
+                }
+            });
+            renderCards();
+            setupDragAndDrop();
+        }
+
+        function renderCards() {
+            var containers = document.querySelectorAll('.sticky-container');
+            for (var i = 0; i < containers.length; i++) {
+                containers[i].innerHTML = '';
+            }
+
+            for (var j = 0; j < cards.length; j++) {
+                var card = cards[j];
+                var container = null;
+                
+                if (card.column === 'now' || card.column === 'next' || card.column === 'later') {
+                    var section = document.getElementById('section-' + card.column);
+                    if (section) {
+                        container = section.querySelector('.sticky-container');
+                    }
+                } else {
+                    var column = document.getElementById('col-' + card.column);
+                    if (column) {
+                        container = column.querySelector('.sticky-container');
+                    }
+                }
+                
+                if (container) {
+                    var stickyEl = createStickyNote(card);
+                    container.appendChild(stickyEl);
+                }
+            }
+        }
+
+        function createStickyNote(card) {
+            var div = document.createElement('div');
+            div.className = 'sticky-note ' + getColorClass(card);
+            div.draggable = true;
+            div.setAttribute('data-id', card.id);
+
+            var html = '';
+            
+            if (card.initiativeType === 'CX' && card.requiresTech) {
+                html += '<div class="sticky-tech-badge">⚙️</div>';
+            }
+            
+            html += '<div class="sticky-title">' + card.title + '</div>';
+            
+            // Show flag if present
+            if (card.flag && card.flag.trim() !== '') {
+                html += '<div class="sticky-flag">' + card.flag + '</div>';
+            }
+            
+            // Show initiative type if not CX
+            if (card.initiativeType && card.initiativeType !== 'CX') {
+                html += '<div class="sticky-type-badge">' + card.initiativeType + '</div>';
+            } else {
+                html += '<div class="sticky-theme">' + getShortTheme(card.theme) + '</div>';
+            }
+            
+            if (card.implementation) {
+                html += '<div class="sticky-impl">' + card.implementation + '</div>';
+            }
+            
+            html += '<div class="sticky-stage">' + card.journeyStage + '</div>';
+            
+            var priority = card.priority || 'medium';
+            html += '<div class="priority-dot ' + priority + '"></div>';
+
+            div.innerHTML = html;
+
+            div.addEventListener('click', function(e) {
+                if (!this.classList.contains('dragging')) {
+                    var cardId = parseInt(this.getAttribute('data-id'));
+                    var cardData = null;
+                    for (var k = 0; k < cards.length; k++) {
+                        if (cards[k].id === cardId) {
+                            cardData = cards[k];
+                            break;
+                        }
+                    }
+                    if (cardData) {
+                        openModal(cardData.column, cardId);
+                    }
+                }
+            });
+
+            return div;
+        }
+
+        function setupDragAndDrop() {
+            document.addEventListener('dragstart', function(e) {
+                if (e.target.classList && e.target.classList.contains('sticky-note')) {
+                    draggedCard = e.target;
+                    e.target.classList.add('dragging');
+                    e.dataTransfer.effectAllowed = 'move';
+                }
+            });
+
+            document.addEventListener('dragend', function(e) {
+                if (e.target.classList && e.target.classList.contains('sticky-note')) {
+                    e.target.classList.remove('dragging');
+                    draggedCard = null;
+                    var cells = document.querySelectorAll('.steps-cell, .backlog-section');
+                    for (var i = 0; i < cells.length; i++) {
+                        cells[i].classList.remove('drag-over');
+                    }
+                }
+            });
+
+            var backlogSections = document.querySelectorAll('.backlog-section');
+            for (var i = 0; i < backlogSections.length; i++) {
+                (function(section) {
+                    section.addEventListener('dragover', function(e) {
+                        e.preventDefault();
+                        section.classList.add('drag-over');
+                    });
+
+                    section.addEventListener('dragleave', function(e) {
+                        section.classList.remove('drag-over');
+                    });
+
+                    section.addEventListener('drop', function(e) {
+                        e.preventDefault();
+                        section.classList.remove('drag-over');
+                        
+                        if (draggedCard) {
+                            var cardId = parseInt(draggedCard.getAttribute('data-id'));
+                            var newColumn = section.getAttribute('data-section');
+                            
+                            for (var k = 0; k < cards.length; k++) {
+                                if (cards[k].id === cardId) {
+                                    cards[k].column = newColumn;
+                                    break;
+                                }
+                            }
+                            renderCards();
+                        }
+                    });
+                })(backlogSections[i]);
+            }
+
+            var stepsCells = document.querySelectorAll('.steps-cell');
+            for (var j = 0; j < stepsCells.length; j++) {
+                (function(cell) {
+                    cell.addEventListener('dragover', function(e) {
+                        e.preventDefault();
+                        cell.classList.add('drag-over');
+                    });
+
+                    cell.addEventListener('dragleave', function(e) {
+                        cell.classList.remove('drag-over');
+                    });
+
+                    cell.addEventListener('drop', function(e) {
+                        e.preventDefault();
+                        cell.classList.remove('drag-over');
+                        
+                        if (draggedCard) {
+                            var cardId = parseInt(draggedCard.getAttribute('data-id'));
+                            var newColumn = cell.getAttribute('data-column');
+                            
+                            for (var k = 0; k < cards.length; k++) {
+                                if (cards[k].id === cardId) {
+                                    cards[k].column = newColumn;
+                                    break;
+                                }
+                            }
+                            renderCards();
+                        }
+                    });
+                })(stepsCells[j]);
+            }
+        }
+
+        function openModal(column, cardId) {
+            currentColumn = column;
+            currentEditId = cardId || null;
+
+            var modal = document.getElementById('modalOverlay');
+            var title = document.getElementById('modalTitle');
+            var deleteBtn = document.getElementById('deleteBtn');
+            var exportBtn = document.getElementById('exportBtn');
+
+            if (cardId) {
+                var card = null;
+                for (var i = 0; i < cards.length; i++) {
+                    if (cards[i].id === cardId) {
+                        card = cards[i];
+                        break;
+                    }
+                }
+                if (card) {
+                    title.textContent = 'Edit Initiative';
+                    deleteBtn.style.display = 'block';
+                    exportBtn.style.display = card.column === 'onepager' ? 'inline-flex' : 'none';
+                    
+                    document.getElementById('cardTitle').value = card.title || '';
+                    document.getElementById('cardInitiativeType').value = card.initiativeType || 'CX';
+                    document.getElementById('cardTheme').value = card.theme || '1. SALES AGENT ENABLEMENT';
+                    document.getElementById('cardJourneyStage').value = card.journeyStage || 'Sales Pre-Qual';
+                    document.getElementById('cardFlag').value = card.flag || '';
+                    document.getElementById('cardDescription').value = card.description || '';
+                    document.getElementById('cardImplementation').value = card.implementation || '';
+                    document.getElementById('cardRationale').value = card.rationale || '';
+                    document.getElementById('cardRequiresTech').checked = card.requiresTech || false;
+                    document.getElementById('cardValue').value = card.value || '';
+                    document.getElementById('cardSize').value = card.size || '';
+                    document.getElementById('cardPriority').value = card.priority || 'tbd';
+                    
+                    var horizonVal = 'now';
+                    if (card.column === 'now' || card.column === 'next' || card.column === 'later') {
+                        horizonVal = card.column;
+                    }
+                    document.getElementById('cardHorizon').value = horizonVal;
+                    document.getElementById('cardCapabilities').value = card.capabilities || '';
+                    document.getElementById('cardDependencies').value = card.dependencies || '';
+                    document.getElementById('cardSponsor').value = card.sponsor || '';
+                    
+                    // Update theme dropdown state
+                    handleInitiativeTypeChange();
+                }
+            } else {
+                title.textContent = 'Add New Initiative';
+                deleteBtn.style.display = 'none';
+                exportBtn.style.display = 'none';
+                document.getElementById('cardTitle').value = '';
+                document.getElementById('cardInitiativeType').value = 'CX';
+                document.getElementById('cardTheme').value = '1. SALES AGENT ENABLEMENT';
+                document.getElementById('cardJourneyStage').value = 'Sales Pre-Qual';
+                document.getElementById('cardFlag').value = '';
+                document.getElementById('cardDescription').value = '';
+                document.getElementById('cardImplementation').value = '';
+                document.getElementById('cardRationale').value = '';
+                document.getElementById('cardRequiresTech').checked = false;
+                document.getElementById('cardValue').value = '';
+                document.getElementById('cardSize').value = '';
+                document.getElementById('cardPriority').value = 'tbd';
+                document.getElementById('cardHorizon').value = column;
+                document.getElementById('cardCapabilities').value = '';
+                document.getElementById('cardDependencies').value = '';
+                document.getElementById('cardSponsor').value = '';
+                
+                // Reset theme dropdown state
+                document.getElementById('cardTheme').disabled = false;
+            }
+
+            modal.classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('modalOverlay').classList.remove('active');
+            currentEditId = null;
+        }
+
+        function saveCard() {
+            var titleVal = document.getElementById('cardTitle').value.trim();
+            if (!titleVal) {
+                alert('Please enter an initiative name');
+                return;
+            }
+
+            var initType = document.getElementById('cardInitiativeType').value;
+            var themeVal = initType === 'CX' ? document.getElementById('cardTheme').value : '';
+
+            var cardData = {
+                title: titleVal,
+                initiativeType: initType,
+                theme: themeVal,
+                flag: document.getElementById('cardFlag').value.trim(),
+                journeyStage: document.getElementById('cardJourneyStage').value,
+                description: document.getElementById('cardDescription').value.trim(),
+                implementation: document.getElementById('cardImplementation').value.trim(),
+                rationale: document.getElementById('cardRationale').value.trim(),
+                requiresTech: document.getElementById('cardRequiresTech').checked,
+                value: document.getElementById('cardValue').value.trim(),
+                size: document.getElementById('cardSize').value,
+                priority: document.getElementById('cardPriority').value,
+                capabilities: document.getElementById('cardCapabilities').value.trim(),
+                dependencies: document.getElementById('cardDependencies').value.trim(),
+                sponsor: document.getElementById('cardSponsor').value.trim()
+            };
+
+            if (currentEditId) {
+                for (var i = 0; i < cards.length; i++) {
+                    if (cards[i].id === currentEditId) {
+                        var oldColumn = cards[i].column;
+                        if (oldColumn === 'now' || oldColumn === 'next' || oldColumn === 'later') {
+                            cardData.column = document.getElementById('cardHorizon').value;
+                        } else {
+                            cardData.column = oldColumn;
+                        }
+                        cardData.id = currentEditId;
+                        cards[i] = cardData;
+                        break;
+                    }
+                }
+            } else {
+                var maxId = 0;
+                for (var j = 0; j < cards.length; j++) {
+                    if (cards[j].id > maxId) {
+                        maxId = cards[j].id;
+                    }
+                }
+                cardData.id = maxId + 1;
+                cardData.column = document.getElementById('cardHorizon').value;
+                cards.push(cardData);
+            }
+
+            renderCards();
+            closeModal();
+        }
+
+        function deleteCard() {
+            if (currentEditId && confirm('Are you sure you want to delete this initiative?')) {
+                var newCards = [];
+                for (var i = 0; i < cards.length; i++) {
+                    if (cards[i].id !== currentEditId) {
+                        newCards.push(cards[i]);
+                    }
+                }
+                cards = newCards;
+                renderCards();
+                closeModal();
+            }
+        }
+
+        function exportOnePager() {
+            var card = null;
+            for (var i = 0; i < cards.length; i++) {
+                if (cards[i].id === currentEditId) {
+                    card = cards[i];
+                    break;
+                }
+            }
+            if (!card) return;
+
+            var onePagerHTML = generateOnePagerHTML(card);
+            var newWindow = window.open('', '_blank');
+            newWindow.document.write(onePagerHTML);
+            newWindow.document.close();
+        }
+
+        function generateOnePagerHTML(card) {
+            var priorityColor = '#9e9e9e';
+            if (card.priority === 'high') priorityColor = '#b01124';
+            else if (card.priority === 'medium') priorityColor = '#e67e22';
+            else if (card.priority === 'low') priorityColor = '#306154';
+            
+            var typeBadge = '';
+            if (card.initiativeType === 'CX') {
+                if (card.requiresTech) {
+                    typeBadge = '<span style="background:#90caf9;padding:4px 10px;border-radius:4px;font-size:12px;margin-left:10px;">CX - Requires Technology</span>';
+                } else {
+                    typeBadge = '<span style="background:#fff59d;padding:4px 10px;border-radius:4px;font-size:12px;margin-left:10px;">CX - Process</span>';
+                }
+            } else {
+                var bgColor = '#80cbc4';
+                if (card.initiativeType === 'Revenue') bgColor = '#ce93d8';
+                else if (card.initiativeType === 'Fee Leakage') bgColor = '#ffcc80';
+                typeBadge = '<span style="background:' + bgColor + ';padding:4px 10px;border-radius:4px;font-size:12px;margin-left:10px;">' + card.initiativeType + '</span>';
+            }
+            
+            var themeDisplay = card.initiativeType === 'CX' ? getShortTheme(card.theme) : card.initiativeType;
+            var prioLabel = card.priority ? card.priority.toUpperCase() : 'MEDIUM';
+            
+            var html = [];
+            html.push('<!DOCTYPE html><html><head>');
+            html.push('<title>One-Pager: ' + card.title + '</title>');
+            html.push('<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Raleway:wght@400;500;600&display=swap" rel="stylesheet">');
+            html.push('<style>');
+            html.push('*{margin:0;padding:0;box-sizing:border-box}');
+            html.push('body{font-family:Raleway,sans-serif;color:#112236;line-height:1.15;padding:40px;max-width:1100px;margin:0 auto}');
+            html.push('.header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:30px;padding-bottom:20px;border-bottom:4px solid #ffcb47}');
+            html.push('.logo-section{display:flex;align-items:center;gap:20px}');
+            html.push('.xplore-logo{font-family:Poppins,sans-serif;font-size:28px;font-weight:600;color:#306154}');
+            html.push('.xplore-logo span{color:#112236}');
+            html.push('.be-logo{font-family:Poppins,sans-serif;font-size:24px;font-weight:700}');
+            html.push('.be-logo .dot{color:#ffcb47}');
+            html.push('h1{font-family:Poppins,sans-serif;font-size:32px;font-weight:700;margin-bottom:15px;color:#112236}');
+            html.push('h2{font-family:Poppins,sans-serif;font-size:16px;font-weight:600;color:#306154;margin-bottom:10px;text-transform:uppercase;letter-spacing:0.5px}');
+            html.push('.meta-row{display:flex;gap:20px;margin-bottom:25px;flex-wrap:wrap}');
+            html.push('.meta-item{background:#ebf1de;padding:10px 16px;border-radius:6px;font-size:13px}');
+            html.push('.meta-label{font-weight:600;color:#306154}');
+            html.push('.priority-badge{display:inline-block;padding:4px 12px;border-radius:20px;color:white;font-weight:600;font-size:12px}');
+            html.push('.grid{display:grid;grid-template-columns:2fr 1fr;gap:25px;margin-bottom:25px}');
+            html.push('.section{background:#f8f9fa;padding:20px;border-radius:8px;border-left:4px solid #306154}');
+            html.push('.section p{font-size:14px;line-height:1.6}');
+            html.push('.sidebar-section{background:#fff8e1;padding:16px;border-radius:8px;margin-bottom:15px}');
+            html.push('.sidebar-section h2{font-size:14px;margin-bottom:8px}');
+            html.push('.sidebar-section p{font-size:13px;line-height:1.5}');
+            html.push('.footer{margin-top:30px;padding-top:20px;border-top:1px solid #dee2e6;display:flex;justify-content:space-between;align-items:center;font-size:12px;color:#737373}');
+            html.push('</style></head><body>');
+            html.push('<div class="header"><div class="logo-section"><div class="xplore-logo"><span>X</span>plore</div></div><div class="be-logo">Be<span class="dot">.</span></div></div>');
+            html.push('<h1>' + card.title + ' ' + typeBadge + '</h1>');
+            html.push('<div class="meta-row">');
+            html.push('<div class="meta-item"><span class="meta-label">Type:</span> ' + themeDisplay + '</div>');
+            html.push('<div class="meta-item"><span class="meta-label">Journey Stage:</span> ' + card.journeyStage + '</div>');
+            html.push('<div class="meta-item"><span class="meta-label">Size:</span> ' + (card.size || 'Not sized') + '</div>');
+            html.push('<div class="meta-item"><span class="meta-label">Value:</span> ' + (card.value || 'TBD') + '/month</div>');
+            html.push('<span class="priority-badge" style="background:' + priorityColor + ';">' + prioLabel + ' PRIORITY</span>');
+            html.push('</div>');
+            html.push('<div class="grid"><div>');
+            html.push('<div class="section"><h2>Problem Statement / Description</h2><p>' + (card.description || 'No description provided.') + '</p></div>');
+            html.push('<div class="section" style="margin-top:20px;"><h2>Business Rationale</h2><p>' + (card.rationale || 'No rationale provided.') + '</p></div>');
+            html.push('</div><div>');
+            html.push('<div class="sidebar-section"><h2>Implementation Approach</h2><p>' + (card.implementation || 'To be determined') + '</p></div>');
+            html.push('<div class="sidebar-section"><h2>Capabilities Required</h2><p>' + (card.capabilities || 'To be determined') + '</p></div>');
+            html.push('<div class="sidebar-section"><h2>Dependencies</h2><p>' + (card.dependencies || 'None identified') + '</p></div>');
+            html.push('<div class="sidebar-section" style="background:#e8f5e9;"><h2>Executive Sponsor</h2><p>' + (card.sponsor || 'To be assigned') + '</p></div>');
+            html.push('</div></div>');
+            html.push('<div class="footer"><div>Generated from Xplore Initiative Pipeline | ' + new Date().toLocaleDateString() + '</div><div>www.bainbridgeexecutive.com</div></div>');
+            html.push('</body></html>');
+            return html.join('');
+        }
+
+        // initBoard is called by the loader above after data is confirmed
+    </script>
+</body>
+</html>
